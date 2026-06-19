@@ -73,6 +73,19 @@ source .venv/bin/activate
 pip install langchain langgraph langchain-openai langchain-google-genai langchain-anthropic langchain-ollama langchain-openrouter python-dotenv tabulate pytest
 ```
 
+Tạo file `.env` ở root repo với nội dung sau (ví dụ dùng Ollama Cloud):
+
+```env
+LLM_PROVIDER=ollama
+OLLAMA_API_KEY=<your-ollama-api-key>
+OLLAMA_BASE_URL=https://ollama.com
+LLM_MODEL=gemma3:4b
+JUDGE_PROVIDER=ollama
+JUDGE_MODEL=gemma3:4b
+COMPACT_THRESHOLD_TOKENS=1000
+COMPACT_KEEP_MESSAGES=4
+```
+
 Sau đó làm việc trực tiếp với `src/` và `data/` ở root repo.
 
 Nếu các bạn là sinh viên:
