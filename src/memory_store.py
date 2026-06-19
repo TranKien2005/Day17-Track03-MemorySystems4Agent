@@ -86,24 +86,27 @@ def extract_profile_updates(message: str) -> dict[str, str]:
 
     # 2. Name Extraction
     name_match = re.search(
-        r'(?:tên là|tên mình là|tên của mình là|tên:)\s*([A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĐĂĨŨƠƯẠ-ỹ][A-Za-z0-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăÂâĐđĨĩŨũƠơƯưẠ-ỹ\s]+)',
-        message
+        r'(?:tên là|tên mình là|tên của mình là|tên:|my name is|i am|i\'m)\s*([A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĐĂĨŨƠƯẠ-ỹ][A-Za-zÀ-ỹ\s]+)',
+        message,
+        re.IGNORECASE
     )
     if name_match:
         name = name_match.group(1).strip()
         name = re.sub(r'[.,!?\n]+$', '', name).strip()
-        name = re.sub(r'\s+(?:nhé|nha|để|và|đang).*$', '', name, flags=re.IGNORECASE).strip()
-        if name and not any(q in name.lower() for q in ["gì", "không", "ai", "đâu"]):
+        name = re.sub(r'\s+(?:nhé|nha|để|và|đang|and|from|living|va|so).*$', '', name, flags=re.IGNORECASE).strip()
+        if name and not any(q in name.lower() for q in ["gì", "không", "ai", "đâu", "going", "what", "where"]):
             facts["name"] = name
 
     # 3. Location Extraction
     loc_match = re.search(
-        r'(?:đang ở|hiện ở|mình ở|làm việc ở|ở)\s+([A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĐĂĨŨƠƯẠ-ỹ][a-zà-ỹ]*(\s+[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĐĂĨŨƠƯẠ-ỹ][a-zà-ỹ]*)*)',
-        message
+        r'(?:đang ở|hiện ở|mình ở|làm việc ở|ở|live in|living in|i\'m from|from|song o)\s+([A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĐĂĨŨƠƯẠ-ỹA-Za-z][a-zà-ỹA-Za-z]*(\s+[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĐĂĨŨƠƯẠ-ỹA-Za-z][a-zà-ỹA-Za-z]*)*)',
+        message,
+        re.IGNORECASE
     )
     if loc_match:
         loc = loc_match.group(1).strip()
-        if loc and not any(q in loc.lower() for q in ["gì", "không", "đâu", "nào"]):
+        loc = re.sub(r'[.,!?\n]+$', '', loc).strip()
+        if loc and not any(q in loc.lower() for q in ["gì", "không", "đâu", "nào", "where", "what"]):
             facts["location"] = loc
 
     # 4. Profession Extraction
