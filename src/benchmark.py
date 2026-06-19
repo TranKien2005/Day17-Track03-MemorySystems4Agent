@@ -167,11 +167,11 @@ def main() -> None:
     stress_convs = load_conversations(stress_data_path)
 
     print("=== RUNNING STANDARD BENCHMARK ===")
-    baseline_agent_std = BaselineAgent(config, force_offline=True)
-    advanced_agent_std = AdvancedAgent(config, force_offline=True)
+    baseline_agent_std = BaselineAgent(config)
+    advanced_agent_std = AdvancedAgent(config)
 
-    row_baseline_std = run_agent_benchmark("Baseline Agent (Offline)", baseline_agent_std, standard_convs, config)
-    row_advanced_std = run_agent_benchmark("Advanced Agent (Offline)", advanced_agent_std, standard_convs, config)
+    row_baseline_std = run_agent_benchmark("Baseline Agent", baseline_agent_std, standard_convs, config)
+    row_advanced_std = run_agent_benchmark("Advanced Agent", advanced_agent_std, standard_convs, config)
 
     print(format_rows([row_baseline_std, row_advanced_std]))
     print("\n")
@@ -183,11 +183,11 @@ def main() -> None:
     profiles_dir.mkdir(parents=True, exist_ok=True)
 
     print("=== RUNNING LONG-CONTEXT STRESS BENCHMARK ===")
-    baseline_agent_stress = BaselineAgent(config, force_offline=True)
-    advanced_agent_stress = AdvancedAgent(config, force_offline=True)
+    baseline_agent_stress = BaselineAgent(config)
+    advanced_agent_stress = AdvancedAgent(config)
 
-    row_baseline_stress = run_agent_benchmark("Baseline Agent (Offline)", baseline_agent_stress, stress_convs, config)
-    row_advanced_stress = run_agent_benchmark("Advanced Agent (Offline)", advanced_agent_stress, stress_convs, config)
+    row_baseline_stress = run_agent_benchmark("Baseline Agent", baseline_agent_stress, stress_convs, config)
+    row_advanced_stress = run_agent_benchmark("Advanced Agent", advanced_agent_stress, stress_convs, config)
 
     print(format_rows([row_baseline_stress, row_advanced_stress]))
     print()
